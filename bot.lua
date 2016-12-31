@@ -58,15 +58,15 @@ function tdcli_update_callback(data)
     -- If the message is text message
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
-      if msg.content_.text_ == "ping" then
+      if input == "ping" then
         -- Reply with regular text
         tdcli.sendMessage(msg.chat_id_, msg.id_, 1, 'pong', 1)
+        end
       -- And if content of the text is...
-      elseif msg.content_.text_ == "PING" then
+      if input == "PING" then
         -- Reply with formatted text
         tdcli.sendMessage(msg.chat_id_, 0, 1, '<b>PONG</b>', 1, 'html')
       end
-    end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
     tdcli_function ({
       ID="GetChats",
