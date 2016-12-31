@@ -86,6 +86,7 @@ function tdcli_update_callback(data)
         -- Reply with formatted text
         tdcli.sendMessage(msg.chat_id_, 0, 1, '<b>PONG</b>', 1, 'html')
       end
+      end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
     tdcli_function ({
       ID="GetChats",
