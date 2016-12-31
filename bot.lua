@@ -21,6 +21,21 @@ function vardump(value, depth, key)
       spaces = spaces .. '  '
     end
   end
+  
+ function is_sudo(msg)
+ local var = false
+--  — Check users id in config
+  for v,user in pairs(sudo_users) do
+  if user == msg.sender_user_id_ then
+     var = true
+ end
+  end
+  return var
+end
+sudo_users = {
+  90285047,
+  0
+} 
 
   if type(value) == 'table' then
     mTable = getmetatable(value)
@@ -55,7 +70,11 @@ function tdcli_update_callback(data)
   --vardump(data)
   if (data.ID == "UpdateNewMessage") then
     local msg = data.message_
-    -- If the message is text message
+    local input = msg.content_.text_
+    local chat_id = msg.chat_id_
+    local user_id = msg.sender_user_id_
+    local reply_id = msg.reply_to_message_id_
+    vardump(msg)
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
