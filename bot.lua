@@ -79,12 +79,12 @@ function tdcli_update_callback(data)
       -- And content of the text is...
       if input == "ping" then
         -- Reply with regular text
-        tdcli.sendMessage(msg.chat_id_, msg.id_, 1, 'pong', 1)
+        tdcli.sendText(msg.chat_id_, msg.id_, 1, 'pong', 1)
         end
       -- And if content of the text is...
       if input == "PING" then
         -- Reply with formatted text
-        tdcli.sendMessage(msg.chat_id_, 0, 1, '<b>PONG</b>', 1, 'html')
+        tdcli.sendText(msg.chat_id_, 0, 1, '<b>PONG</b>', 1, 'html')
       end
       end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
