@@ -227,7 +227,13 @@ function tdcli_update_callback(data)
       end
       end
       if redis:get('lwebpage:'..chat_id) and input:match("https://") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match("http://") and not is_sudo(msg) then
 	elseif redis:get('lwebpage:'..chat_id) and input:match("www.") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match(".com") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match(".ir") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match(".org") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match(".net") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match(".info") and not is_sudo(msg) then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
@@ -271,6 +277,62 @@ function tdcli_update_callback(data)
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
+	if input:match("^[#!/][Ll]ock badword$") and is_sudo(msg) then
+       if redis:get('lbadword:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>BadWord Posting Is Already Not Allowed Here.</i>', 1, 'html')
+       else 
+        redis:set('lbadword:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now BadWord Posting Is Not Allowed Here.</i>', 1, 'html')
+      end
+      end 
+      if input:match("^[#!/][Uu]nlock badword$") and is_sudo(msg) then
+       if not redis:get('lbadword:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>BadWord Posting Is Already Allowed Here.</i>', 1, 'html')
+       else
+         redis:del('lbadword:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now BadWord Posting Is Allowed Here.</i>', 1, 'html')
+      end
+      end
+      if redis:get('lbadword:'..chat_id) and input:match("کیر") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("کس") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("کص") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("کث") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("کسکش") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("کونی") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("چاقال") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("ننه") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("نن") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("kir") and not is_sudo(msg) then
+	elseif redis:get('lbadword:'..chat_id) and input:match("kos") and not is_sudo(msg) then
+        tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+      end
+			
+	if input:match("^[#!/][Ll]ock operator$") and is_sudo(msg) then
+       if redis:get('loperator:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Operator Posting Is Already Not Allowed Here.</i>', 1, 'html')
+       else 
+        redis:set('loperator:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Operator Posting Is Not Allowed Here.</i>', 1, 'html')
+      end
+      end 
+      if input:match("^[#!/][Uu]nlock operator$") and is_sudo(msg) then
+       if not redis:get('loperator:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Operator Posting Is Already Allowed Here.</i>', 1, 'html')
+       else
+         redis:del('loperator:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Operator Posting Is Allowed Here.</i>', 1, 'html')
+      end
+      end
+      if redis:get('loperator:'..chat_id) and input:match("rightel") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("irancell") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("hamrahavval") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("taliya") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("رایتل") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("ایرانسل") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("همراه اول") and not is_sudo(msg) then
+	elseif redis:get('loperator:'..chat_id) and input:match("تالیا") and not is_sudo(msg) then
+        tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+      end		
 			
       if input:match("^[#!/][Mm]ute all$") and is_sudo(msg) then
        if redis:get('mall:'..chat_id) then
@@ -343,6 +405,20 @@ function tdcli_update_callback(data)
 	  else 
 	  larabic = "Unlock"
 	 end
+			
+		local lbadword = 'lbadword:'..chat_id
+	 if redis:get(lbadword) then
+	  lbadword = "Lock"
+	  else 
+	  lbadword = "Unlock"
+	 end
+			
+	local loperator = 'loperator:'..chat_id
+	 if redis:get(loperator) then
+	  loperator = "Lock"
+	  else 
+	  loperator = "Unlock"
+	 end		
          
          local all = 'mall:'..chat_id
 	 if redis:get(all) then
@@ -351,7 +427,7 @@ function tdcli_update_callback(data)
 	  All = "Unlock"
 	 end
       if input:match("^[#!/][Ss]ettings$") and is_sudo(msg) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n<b>BadWord:</b> <code>'..lbadword..'</code>\n<b>Operator:</b> <code>'..loperator..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
       end
       end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
