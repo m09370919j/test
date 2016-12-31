@@ -226,7 +226,8 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now WebPage Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('lwebpage:'..chat_id) and input:match("[https://],[www.]") and not is_sudo(msg) then
+      if redis:get('lwebpage:'..chat_id) and input:match("https://") and not is_sudo(msg) then
+	elseif redis:get('lwebpage:'..chat_id) and input:match("www.") and not is_sudo(msg) then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
