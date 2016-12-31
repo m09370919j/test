@@ -1,8 +1,21 @@
 -- This script is based on telegram-cli sample lua script by @vysheng, 
--- written to demonstrate how to use tdlib.lua for your telegram-cli bot.
+-- written to demonstrate how to use tdlib.lua for your telegram-cli bot
 
 -- Load tdcli library.
 tdcli = dofile('tdcli.lua')
+--local redis = require 'redis'
+--redis = (loadfile "redis.lua")()
+--JSON = require('dkjson')
+--db = require('redis')
+--redis = db.connect('127.0.0.1', 6379)
+--serpent = require('serpent')
+--redis:select(2)}
+--redis = dofile('redis.lua')
+--JSON = require('dkjson')
+--serpent = require('serpent')
+--redis = (loadfile "./libs/redis.lua")()
+redis = require('redis')
+redis = Redis.connect('127.0.0.1', 6379)
 
 -- Print message format. Use serpent for prettier result.
 function vardump(value, depth, key)
