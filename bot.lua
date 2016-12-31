@@ -286,7 +286,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now BadWord Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('lbadword:'..chat_id) and input:match("کیر") or input:match("کس") or input:match("کص") or input:match("کث") or input:match("سگ") or input:match("جنده") or input:match("حرومزاده") or input:match("چاقال") or input:match("کونی") or input:match("ننه") and not is_sudo(msg) then
+      if redis:get('lbadword:'..chat_id) and input:match("کیر") or input:match("[کس]") or input:match("[کص]") or input:match("[کث]") or input:match("[سگ]") or input:match("[جنده]") or input:match("[حرومزاده]") or input:match("[چاقال]") or input:match("[کونی]") or input:match("[ننه]") and not is_sudo(msg) then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
@@ -306,7 +306,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Operator Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('loperator:'..chat_id) and input:match("rightel") or input:match("irancell") or input:match("hamrahavval") or input:match("ir-mci") or input:match("رایتل") or input:match("ایرانسل") or input:match("همراه اول") or input:match("taliya") or input:match("تالیا") and not is_sudo(msg) then
+      if redis:get('loperator:'..chat_id) and input:match("rightel") or input:match("[irancell]") or input:match("[hamrahavval]") or input:match("[ir-mci]") or input:match("[رایتل]") or input:match("[ایرانسل]") or input:match("[همراه اول]") or input:match("[taliya]") or input:match("[تالیا]") and not is_sudo(msg) then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 				
