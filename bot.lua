@@ -89,9 +89,11 @@ function tdcli_update_callback(data)
     local reply_id = msg.reply_to_message_id_
       vardump(msg)
     if msg.content_.ID == "MessageText" then
-	if msg.content_.ID == "MessageSticker" then
-        input = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
-	end
+	if msg.content_.voice_ then
+        msg.text = "!!!voice:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
       -- And content of the text is...
       if input == "ping" then
         -- Reply with regular text
@@ -348,7 +350,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Mute Sticker Has Been Disabled.</i>', 1, 'html')
       end		
 	end
-	if redis:get('msticker:'..chat_id) and input:match("!!!sticker:") and msg then
+	if redis:get('msticker:'..chat_id) and input:match("!!!voice:") and msg then
      tdcli.deleteMessages(chat_id, {[0] = msg.id_})
    end			
          local links = 'llink:'..chat_id
