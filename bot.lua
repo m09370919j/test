@@ -90,9 +90,9 @@ function tdcli_update_callback(data)
       vardump(msg)
     if msg.content_.ID == "MessageText" then
 	if msg.content_.voice_ then
-        msg.text = "!!!voice:"
+        input = "!!!voice:"
         if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
+          input = msg.text .. msg.content_.caption_
         end
       -- And content of the text is...
       if input == "ping" then
