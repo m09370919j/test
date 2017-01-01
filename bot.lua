@@ -88,6 +88,41 @@ function tdcli_update_callback(data)
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
     vardump(msg)
+      if msg.content_.photo_ then
+        input = "!!!photo:"
+        if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.animation_ then
+        input = "!!!gif:"
+        if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.ID == "MessageChatJoinByLink" then
+        input = "!!!tgservice:joinbylink"
+      elseif msg.content_.ID == "MessageSticker" then
+        input = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
+      elseif msg.content_.document_ then
+        input = "!!!document:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.video_ then
+        input = "!!!video:"
+        if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.voice_ then
+        input = "!!!voice:"
+        if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.audio_ then
+        input = "!!!audio:"
+        if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
+      
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
@@ -307,32 +342,7 @@ function tdcli_update_callback(data)
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
-	if input:match("^[#!/][Ll]ock operator$") and is_sudo(msg) then
-       if redis:get('loperator:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Operator Posting Is Already Not Allowed Here.</i>', 1, 'html')
-       else 
-        redis:set('loperator:'..chat_id, true)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Operator Posting Is Not Allowed Here.</i>', 1, 'html')
-      end
-      end 
-      if input:match("^[#!/][Uu]nlock operator$") and is_sudo(msg) then
-       if not redis:get('loperator:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Operator Posting Is Already Allowed Here.</i>', 1, 'html')
-       else
-         redis:del('loperator:'..chat_id)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Operator Posting Is Allowed Here.</i>', 1, 'html')
-      end
-      end
-      if redis:get('loperator:'..chat_id) and input:match("rightel") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("irancell") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("hamrahavval") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("taliya") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("رایتل") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("ایرانسل") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("همراه اول") and not is_sudo(msg) then
-	elseif redis:get('loperator:'..chat_id) and input:match("تالیا") and not is_sudo(msg) then
-        tdcli.deleteMessages(chat_id, {[0] = msg.id_})
-      end		
+	
 			
       if input:match("^[#!/][Mm]ute all$") and is_sudo(msg) then
        if redis:get('mall:'..chat_id) then
@@ -350,6 +360,29 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Mute All Has Been Disabled.</i>', 1, 'html')
       end
       end
+	if redis:get('mall:'..chat_id) and msg then
+     tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+   end			
+				
+		if input:match("^[#!/][Mm]ute sticker$") and is_sudo(msg) then
+       if redis:get('msticker:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Mute Sticker Is Already Enabled.</i>', 1, 'html')
+       else 
+        redis:set('msticker:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b\n<i>>Mute Sticker Has Been Enabled.</i>', 1, 'html')
+      end
+      end
+      if input:match("^[#!/][Uu]nmute sticker$") and is_sudo(msg) then
+       if not redis:get('msticker:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Mute Sticker Is Already Disable.</i>', 1, 'html')
+       else 
+         redis:del('msticker:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Mute Sticker Has Been Disabled.</i>', 1, 'html')
+      end		
+	end
+	if redis:get('msticker:'..chat_id) and input:match("!!!sticker") then
+     tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+   end			
          local links = 'llink:'..chat_id
 	 if redis:get(links) then
 	  Links = "Lock"
@@ -406,20 +439,13 @@ function tdcli_update_callback(data)
 	  larabic = "Unlock"
 	 end
 			
-		local lbadword = 'lbadword:'..chat_id
+	local lbadword = 'lbadword:'..chat_id
 	 if redis:get(lbadword) then
 	  lbadword = "Lock"
 	  else 
 	  lbadword = "Unlock"
 	 end
 			
-	local loperator = 'loperator:'..chat_id
-	 if redis:get(loperator) then
-	  loperator = "Lock"
-	  else 
-	  loperator = "Unlock"
-	 end		
-         
          local all = 'mall:'..chat_id
 	 if redis:get(all) then
 	  All = "Lock"
@@ -427,7 +453,7 @@ function tdcli_update_callback(data)
 	  All = "Unlock"
 	 end
       if input:match("^[#!/][Ss]ettings$") and is_sudo(msg) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n<b>BadWord:</b> <code>'..lbadword..'</code>\n<b>Operator:</b> <code>'..loperator..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n<b>BadWord:</b> <code>'..lbadword..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
       end
       end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
