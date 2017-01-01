@@ -87,7 +87,6 @@ function tdcli_update_callback(data)
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
-    vardump(msg)
       if msg.content_.photo_ then
         input = "!!!photo:"
         if msg.content_.caption_ then
@@ -122,7 +121,7 @@ function tdcli_update_callback(data)
         if msg.content_.caption_ then
           input = msg.text .. msg.content_.caption_
         end
-      
+      vardump(msg)
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
