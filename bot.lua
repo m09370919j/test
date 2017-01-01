@@ -345,7 +345,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Mute Sticker Has Been Disabled.</i>', 1, 'html')
       end		
 	end
-	if redis:get('msticker:'..chat_id) and input:match("!!!sticker") then
+	if redis:get('msticker:'..chat_id) and input:match("!!!sticker") and msg then
      tdcli.deleteMessages(chat_id, {[0] = msg.id_})
    end			
          local links = 'llink:'..chat_id
