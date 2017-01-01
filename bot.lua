@@ -89,6 +89,9 @@ function tdcli_update_callback(data)
     local reply_id = msg.reply_to_message_id_
       vardump(msg)
     if msg.content_.ID == "MessageText" then
+	if msg.content_.caption_ then
+          input = msg.text .. msg.content_.caption_
+        end
 	if msg.content_.voice_ then
         input = "!!!voice:"
         if msg.content_.caption_ then
