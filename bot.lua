@@ -307,29 +307,7 @@ function tdcli_update_callback(data)
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
 			
-	if input:match("^[#!/][Ll]ock edit$") and is_sudo(msg) then
-       if redis:get('ledit:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting is already locked</b>', 1, 'html')
-       else
-        redis:set('ledit:'..chat_id, true)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting has been locked</b>', 1, 'html')
-      end
-      end 
-      if input:match("^[#!/][Uu]nlock edit$") and is_sudo(msg) then
-       if not redis:get('ledit:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting is not locked</b>', 1, 'html')
-       else
-         redis:del('ledit:'..chat_id)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting has been unlocked</b>', 1, 'html')
-      end
-	end
-	if data.ID == "UpdateMessageEdited" then
-  tdcli_function ({
-    ID = "DeleteMessages",
-    chat_id_ = data.chat_id_,
-    message_ids_ = {[0] = data.message_id_}
-  }, dl_cb, nil)
-		end			
+			
       if input:match("^[#!/][Mm]ute all$") and is_sudo(msg) then
        if redis:get('mall:'..chat_id) then
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Mute All Is Already Enabled.</i>', 1, 'html')
