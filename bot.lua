@@ -328,26 +328,7 @@ function tdcli_update_callback(data)
 	if redis:get('mall:'..chat_id) and msg then
      tdcli.deleteMessages(chat_id, {[0] = msg.id_})
    end			
-				
-		if input:match("^[#!/][Mm]ute sticker$") and is_sudo(msg) then
-       if redis:get('msticker:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Mute Sticker Is Already Enabled.</i>', 1, 'html')
-       else 
-        redis:set('msticker:'..chat_id, true)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b\n<i>>Mute Sticker Has Been Enabled.</i>', 1, 'html')
-      end
-      end
-      if input:match("^[#!/][Uu]nmute sticker$") and is_sudo(msg) then
-       if not redis:get('msticker:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Mute Sticker Is Already Disable.</i>', 1, 'html')
-       else 
-         redis:del('msticker:'..chat_id)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Mute Sticker Has Been Disabled.</i>', 1, 'html')
-      end		
-	end
-	if redis:get('msticker:'..chat_id) and input:match("!!!voice:") and msg then
-     tdcli.deleteMessages(chat_id, {[0] = msg.id_})
-   end			
+					
          local links = 'llink:'..chat_id
 	 if redis:get(links) then
 	  Links = "Lock"
