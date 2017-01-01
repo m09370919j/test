@@ -89,6 +89,9 @@ function tdcli_update_callback(data)
     local reply_id = msg.reply_to_message_id_
       vardump(msg)
     if msg.content_.ID == "MessageText" then
+	if msg.content_.ID == "MessageSticker" then
+        msg.text = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
+	end
       -- And content of the text is...
       if input == "ping" then
         -- Reply with regular text
