@@ -343,7 +343,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('llocation:'..chat_id) and input:match("!!!location") then
+      if redis:get('llocation:'..chat_id) and msg.content_.location_:match then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end		
 			
@@ -456,13 +456,7 @@ function tdcli_update_callback(data)
     }, dl_cb, nil)
 	elseif (data.ID == "UpdateMessageEdited") then
     if redis:get('ledit:'..data.chat_id_) then
-  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
-			
-	elseif (data.ID == "LocationMessage") then
-    if redis:get('llocation:'..data.chat_id_) then
-  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
-end	
-			
+  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})	
 end	
   end		
 end
