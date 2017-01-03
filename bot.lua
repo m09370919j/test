@@ -463,43 +463,6 @@ function tdcli_update_callback(data)
 		tdcli.deleteMessages(chat_id, {[0] = msg.id_})
 			end
 				
-	if msg.content_.photo_ then
-        msg.text = "!!!photo:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.animation_ then
-        msg.text = "!!!gif:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.ID == "MessageChatJoinByLink" then
-        msg.text = "!!!tgservice:joinbylink"
-      elseif msg.content_.ID == "MessageSticker" then
-        msg.text = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
-      elseif msg.content_.document_ then
-        msg.text = "!!!document:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.video_ then
-        msg.text = "!!!video:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-elseif msg.content_.voice_ then
-        msg.text = "!!!voice:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-	elseif msg.content_.location_ then
-        msg.text = "!!!location:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end	
-				
-			
-end	
   end		
 end
 end
