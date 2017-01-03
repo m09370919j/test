@@ -458,8 +458,12 @@ function tdcli_update_callback(data)
     if redis:get('ledit:'..data.chat_id_) then
   tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
 			
-	
-		
+	elseif msg.content_.ID == "MessageAnimation" then
+if msg.content_.animation_ then
+	if redis:get('llocation:'..data.chat_id_) then
+		tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})			
+		end
+			end	
 	if msg.content_.photo_ then
         msg.text = "!!!photo:"
         if msg.content_.caption_ then
