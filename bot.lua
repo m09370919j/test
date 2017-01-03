@@ -306,7 +306,26 @@ function tdcli_update_callback(data)
 	elseif redis:get('lbadword:'..chat_id) and input:match("kos") and not is_sudo(msg) then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end
-			
+	
+	if input:match("^[#!/][Ll]ock edit$") and is_sudo(msg) then
+       if redis:get('ledit:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting is already locked</b>', 1, 'html')
+       else 
+        redis:set('ledit:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting has been locked</b>', 1, 'html')
+      end
+      end 
+      if input:match("^[#!/][Uu]nlock edit$") and is_sudo(msg) then
+       if not redis:get('ledit:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting is not locked</b>', 1, 'html')
+       else
+         redis:del('ledit:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>edit posting has been unlocked</b>', 1, 'html')
+      end
+      end
+      if redis:get('ledit:'..chat_id) and input:match("!!!edit:") then
+        tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+	  end		
 			
       if input:match("^[#!/][Mm]ute all$") and is_sudo(msg) then
        if redis:get('mall:'..chat_id) then
