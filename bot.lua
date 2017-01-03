@@ -490,7 +490,7 @@ elseif msg.content_.voice_ then
           msg.text = msg.text .. msg.content_.caption_
         end
 	elseif msg.content_.location_ then
-        input = "!!!location:"
+        msg.text = "!!!location:"
         if msg.content_.caption_ then
           msg.text = msg.text .. msg.content_.caption_
         end	
