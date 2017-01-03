@@ -83,8 +83,7 @@ function tdcli_update_callback(data)
   --vardump(data)
   if (data.ID == "UpdateNewMessage") then
     local msg = data.message_
-    local input = msg.content_.text_
-    local location = msg.content_.location_	
+    local input = msg.content_.text_	
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
@@ -344,7 +343,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('llocation:'..chat_id) and location and not is_sudo(msg) then
+      if redis:get('llocation:'..chat_id) == msg.content_.location_ then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end		
 			
