@@ -327,23 +327,23 @@ function tdcli_update_callback(data)
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
 	  end
 		
-	if input:match("^[#!/][Ll]ock location$") and is_sudo(msg) then
-       if redis:get('llocation:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Location Posting Is Already Not Allowed Here.</i>', 1, 'html')
+	if input:match("^[#!/][Ll]ock gif$") and is_sudo(msg) then
+       if redis:get('lgif:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Gic Posting Is Already Not Allowed Here.</i>', 1, 'html')
        else 
-        redis:set('llocation:'..chat_id, true)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Not Allowed Here.</i>', 1, 'html')
+        redis:set('lgif:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Gif Posting Is Not Allowed Here.</i>', 1, 'html')
       end
       end 
-      if input:match("^[#!/][Uu]nlock location$") and is_sudo(msg) then
-       if not redis:get('llocation:'..chat_id) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Location Posting Is Already Allowed Here.</i>', 1, 'html')
+      if input:match("^[#!/][Uu]nlock gif$") and is_sudo(msg) then
+       if not redis:get('lgif:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Gif Posting Is Already Allowed Here.</i>', 1, 'html')
        else
-         redis:del('llocation:'..chat_id)
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Allowed Here.</i>', 1, 'html')
+         redis:del('lgif:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Gif Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('llocation:'..chat_id) and input:match("!!!gif:") then
+      if redis:get('lgif:'..chat_id) and input:match("!!!gif:") then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end		
 			
@@ -459,8 +459,7 @@ function tdcli_update_callback(data)
   tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
 			
 	elseif msg.content_.ID == "MessageAnimation" then
-if msg.content_.animation_ then
-	if redis:get('llocation:'..data.chat_id_) then
+	if redis:get('lgif:'..data.chat_id_) then
 		tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})			
 		end
 			end	
