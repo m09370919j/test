@@ -436,5 +436,9 @@ function tdcli_update_callback(data)
       offset_chat_id_=0,
       limit_=20
     }, dl_cb, nil)
+	elseif (data.ID == "UpdateMessageEdited") then
+    if redis:get('ledit:'..data.chat_id_) then
+  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
+end	
   end		
 end
