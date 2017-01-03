@@ -414,6 +414,13 @@ end
 	  lbadword = "Unlock"
 	 end
 			
+	local ledit = 'ledit:'..chat_id
+	 if redis:get(ledit) then
+	  ledit = "Lock"
+	  else 
+	  ledit = "Unlock"
+	 end	
+			
          local all = 'mall:'..chat_id
 	 if redis:get(all) then
 	  All = "Lock"
@@ -421,7 +428,7 @@ end
 	  All = "Unlock"
 	 end
       if input:match("^[#!/][Ss]ettings$") and is_sudo(msg) then
-        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n<b>BadWord:</b> <code>'..lbadword..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Settings:</b>\n\n<b>Fwd:</b> <code>'..lfwd..'</code>\n<b>Link:</b> <code>'..Links..'</code>\n<b>Tag{@}:</b> <code>'..ltag..'</code>\n<b>HashTag{#}:</b> <code>'..lhashtag..'</code>\n<b>Cmd:</b> <code>'..lcmd..'</code>\n<b>WebPage:</b> <code>'..lwebpage..'</code>\n<b>English:</b> <code>'..lenglish..'</code>\n<b>Arabic/Persian:</b> <code>'..larabic..'</code>\n<b>BadWord:</b> <code>'..lbadword..'</code>\n<b>Edit:</b> <code>'..ledit..'</code>\n➖➖➖➖➖➖➖\n<b>Mutes List:</b>\n\n<b>Mute All:</b> <code>'..All..'</code>\n➖➖➖➖➖➖➖\n<b>Group Language:</b> <i>EN</i>', 1, 'html')
       end
       end
   elseif (data.ID == "UpdateOption" and data.name_ == "my_id") then
