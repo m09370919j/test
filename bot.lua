@@ -84,7 +84,7 @@ function tdcli_update_callback(data)
   if (data.ID == "UpdateNewMessage") then
     local msg = data.message_
     local input = msg.content_.text_
-    local location = msg.content_.location_	
+    local location = msg.content_.sticker_	
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
