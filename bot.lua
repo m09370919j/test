@@ -84,7 +84,6 @@ function tdcli_update_callback(data)
   if (data.ID == "UpdateNewMessage") then
     local msg = data.message_
     local input = msg.content_.text_
-    local location = msg.content_.location_
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
@@ -458,6 +457,12 @@ function tdcli_update_callback(data)
 	elseif (data.ID == "UpdateMessageEdited") then
     if redis:get('ledit:'..data.chat_id_) then
   tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
+			
+	elseif (data.ID == "LocationMessage") then
+    if redis:get('llocation:'..data.chat_id_) then
+  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
+end	
+			
 end	
   end		
 end
