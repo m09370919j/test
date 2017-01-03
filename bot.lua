@@ -83,12 +83,47 @@ function tdcli_update_callback(data)
   --vardump(data)
   if (data.ID == "UpdateNewMessage") then
     local msg = data.message_
-    local input = msg.content_.text_
-    local location = msg.content_.sticker_	
+    local input = msg.content_.text_	
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
-      vardump(msg)    	
+      vardump(msg)
+		
+	if msg.content_.photo_ then
+        msg.text = "!!!photo:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.animation_ then
+        msg.text = "!!!gif:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.ID == "MessageChatJoinByLink" then
+        msg.text = "!!!tgservice:joinbylink"
+      elseif msg.content_.ID == "MessageSticker" then
+        msg.text = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
+      elseif msg.content_.document_ then
+        msg.text = "!!!document:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.video_ then
+        msg.text = "!!!video:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+elseif msg.content_.voice_ then
+        msg.text = "!!!voice:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+	elseif msg.content_.location_ then
+        msg.text = "!!!location:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end	
+			
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
@@ -344,7 +379,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('llocation:'..chat_id) and location then
+      if redis:get('llocation:'..chat_id) and input:match("!!!location:") then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end		
 			
