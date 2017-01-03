@@ -87,43 +87,7 @@ function tdcli_update_callback(data)
     local chat_id = msg.chat_id_
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
-      vardump(msg)
-		
-	if msg.content_.photo_ then
-        msg.text = "!!!photo:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.animation_ then
-        msg.text = "!!!gif:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.ID == "MessageChatJoinByLink" then
-        msg.text = "!!!tgservice:joinbylink"
-      elseif msg.content_.ID == "MessageSticker" then
-        msg.text = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
-      elseif msg.content_.document_ then
-        msg.text = "!!!document:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-      elseif msg.content_.video_ then
-        msg.text = "!!!video:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-elseif msg.content_.voice_ then
-        msg.text = "!!!voice:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end
-	elseif msg.content_.location_ then
-        msg.text = "!!!location:"
-        if msg.content_.caption_ then
-          msg.text = msg.text .. msg.content_.caption_
-        end	
-			
+      vardump(msg)	
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
@@ -492,7 +456,46 @@ elseif msg.content_.voice_ then
     }, dl_cb, nil)
 	elseif (data.ID == "UpdateMessageEdited") then
     if redis:get('ledit:'..data.chat_id_) then
-  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})	
+  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
+			
+	
+		
+	if msg.content_.photo_ then
+        msg.text = "!!!photo:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.animation_ then
+        msg.text = "!!!gif:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.ID == "MessageChatJoinByLink" then
+        msg.text = "!!!tgservice:joinbylink"
+      elseif msg.content_.ID == "MessageSticker" then
+        msg.text = "!!!sticker:" .. data.message_.content_.sticker_.emoji_
+      elseif msg.content_.document_ then
+        msg.text = "!!!document:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+      elseif msg.content_.video_ then
+        msg.text = "!!!video:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+elseif msg.content_.voice_ then
+        msg.text = "!!!voice:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end
+	elseif msg.content_.location_ then
+        msg.text = "!!!location:"
+        if msg.content_.caption_ then
+          msg.text = msg.text .. msg.content_.caption_
+        end	
+				
+			
 end	
   end		
 end
