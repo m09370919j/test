@@ -329,7 +329,27 @@ end
       end
       if redis:get('ledit:'..chat_id) and input:match("!!!edit:") then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
-	  end		
+	  end
+			
+	if input:match("^[#!/][Ll]ock location$") and is_sudo(msg) then
+       if redis:get('llocation:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>HashTag Posting Is Already Not Allowed Here.</i>', 1, 'html')
+       else 
+        redis:set('llocation:'..chat_id, true)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now HashTag Posting Is Not Allowed Here.</i>', 1, 'html')
+      end
+      end 
+      if input:match("^[#!/][Uu]nlock location$") and is_sudo(msg) then
+       if not redis:get('llocation:'..chat_id) then
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>HashTag Posting Is Already Allowed Here.</i>', 1, 'html')
+       else
+         redis:del('llocation:'..chat_id)
+        tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now HashTag Posting Is Allowed Here.</i>', 1, 'html')
+      end
+      end
+      if redis:get('llocation:'..chat_id) and msg.content_.location_ and not is_sudo(msg) then
+        tdcli.deleteMessages(chat_id, {[0] = msg.id_})
+      end		
 			
       if input:match("^[#!/][Mm]ute all$") and is_sudo(msg) then
        if redis:get('mall:'..chat_id) then
