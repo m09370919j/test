@@ -344,7 +344,7 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Location Posting Is Allowed Here.</i>', 1, 'html')
       end
       end
-      if redis:get('llocation:'..chat_id) and location:match("!!!location") then
+      if redis:get('llocation:'..chat_id) and input:match("!!!location") then
         tdcli.deleteMessages(chat_id, {[0] = msg.id_})
       end		
 			
