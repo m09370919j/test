@@ -88,6 +88,10 @@ function tdcli_update_callback(data)
     local user_id = msg.sender_user_id_
     local reply_id = msg.reply_to_message_id_
       vardump(msg)
+	elseif (data.ID == "UpdateMessageEdited") then
+if redis:get('lock_edittg:'..data.chat_id_) then
+  tdcli.deleteMessages(data.chat_id_, {[0] = tonumber(data.message_id_)})
+end	
     if msg.content_.ID == "MessageText" then
       -- And content of the text is...
       if input == "ping" then
