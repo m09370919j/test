@@ -113,12 +113,12 @@ function tdcli_update_callback(data)
 			
 	if input:match("^[#!/][Aa]dd$") and is_sudo(msg) then
 		 redis:set('groups',chat_id)
-		tdcli.sendMessage(chat_id, msg.id_, 0, 1, nil, '*Group Has Been Added!*', 1, 'md')
+		tdcli.sendMessage(chat_id, msg.id_, 1, nil, '*Group Has Been Added!*', 1, 'md')
 		end
 			
 	if input:match("^[#!/][Rr]em$") and is_sudo(msg) then
 		redis:del('groups',chat_id)
-		 tdcli.sendMessage(chat_id, msg.id_, 0, 1, nil, '*Group Has Been Removed!*', 1, 'md')
+		 tdcli.sendMessage(chat_id, msg.id_, 1, nil, '*Group Has Been Removed!*', 1, 'md')
 		 end
 			
       if input:match("^[#!/][Ll]ock link$") and is_sudo(msg) then
@@ -168,7 +168,7 @@ function tdcli_update_callback(data)
         redis:set('ltag:'..chat_id, true)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Now Tag Posting Is Not Allowed Here.</i>', 1, 'html')
       end
-      end 
+    end 
       if input:match("^[#!/][Uu]nlock tag$") and is_sudo(msg) then
        if not redis:get('ltag:'..chat_id) then
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Tag Posting Is Already Allowed Here.</i>', 1, 'html')
