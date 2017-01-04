@@ -110,6 +110,17 @@ function tdcli_update_callback(data)
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Done!</b>\n<i>>Your Msg Has Been Unpinned.', 1, 'html')
         tdcli.unpinChannelMessage(chat_id, reply_id, 1)
       end
+			
+	if input:match("^[#!/][Aa]dd$") and is_sudo(msg) then
+		 redis:sadd('groups',chat_id)
+		tdcli.sendMessage(chat_id, msg.id_, 0, 1, nil, '*Group Hadd Been Addet!*', 1, 'md')
+		end
+			
+	if input:match("^[#!/][Rr]em$") and is_sudo(msg) then
+		redis:srem('groups',chat_id)
+		 tdcli.sendMessage(chat_id, msg.id_, 0, 1, nil, '*Group Has Been Removed!*', 1, 'md')
+		 end
+			
       if input:match("^[#!/][Ll]ock link$") and is_sudo(msg) then
        if redis:get('llink:'..chat_id) then
         tdcli.sendMessage(chat_id, msg.id_, 1, '<b>Error!</b>\n<i>>Link Posting Is Already Not Allowed Here.</i>', 1, 'html')
