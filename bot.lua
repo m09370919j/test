@@ -112,12 +112,12 @@ function tdcli_update_callback(data)
       end
 			
 	if input:match("^[#!/][Aa]dd$") and is_sudo(msg) then
-		 redis:sadd('groups',chat_id)
+		 redis:set('groups',chat_id)
 		tdcli.sendMessage(chat_id, msg.id_, 1, nil, '</b>>Group Has Been Added!</b>', 1, 'html')
 		end
 			
 	if input:match("^[#!/][Rr]em$") and is_sudo(msg) then
-		redis:srem('groups',chat_id)
+		redis:del('groups',chat_id)
 		 tdcli.sendMessage(chat_id, msg.id_, 1, nil, '<b>>Group Has Been Removed!</b>', 1, 'html')
 		 end
 			
